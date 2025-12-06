@@ -1,0 +1,171 @@
+body {
+  background-color: #f7f7f9; /* Light background */
+  color: #333333; /* Dark text */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.875rem; /* text-3xl equivalent */
+  font-weight: 700; /* bold equivalent */
+  color: #4f46e5; /* Indigo */
+}
+
+.timer-display {
+  font-size: 4rem; /* Equivalent to text-7xl */
+  font-weight: 800;
+  text-align: center;
+  font-family: "Inter", monospace;
+  letter-spacing: 0.1em;
+  color: #1f2937;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.timer-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  color: #1f2937;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.timer-input:focus {
+  border-color: #4f46e5;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+/* Style for the permission button (full width) */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* New style for the horizontal Start/Stop and Reset buttons */
+.btn-controls-group {
+  display: flex;
+  gap: 12px;
+}
+.btn-controls-group .btn {
+  flex: 1; /* Make buttons take equal space */
+}
+
+.btn {
+  width: 100%;
+  padding: 12px 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.1s ease, background-color 0.2s ease, box-shadow 0.2s;
+}
+
+.btn:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-permission {
+  background-color: #f59e0b; /* Amber */
+  color: white;
+}
+.btn-permission:hover {
+  background-color: #d97706;
+}
+
+.btn-primary {
+  background-color: #4f46e5; /* Indigo (Start) */
+  color: white;
+}
+.btn-primary:hover {
+  background-color: #4338ca;
+}
+
+.btn-stop {
+  background-color: #ef4444; /* Red (Stop) */
+  color: white;
+}
+.btn-stop:hover {
+  background-color: #dc2626;
+}
+
+.btn-secondary {
+  background-color: #6b7280; /* Gray (Reset) */
+  color: white;
+}
+.btn-secondary:hover {
+  background-color: #4b5563;
+}
+
+.btn-start:disabled,
+.btn-primary:disabled,
+.btn-stop:disabled,
+.btn-secondary:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.status-message {
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 8px;
+}
+
+.status-green {
+  color: #10b981;
+}
+.status-red {
+  color: #ef4444;
+  font-weight: bold;
+}
+.status-yellow {
+  color: #f59e0b;
+}
+
+@media (max-width: 600px) {
+  .timer-display {
+    font-size: 3rem;
+  }
+}

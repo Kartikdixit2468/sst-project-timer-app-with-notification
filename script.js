@@ -1,13 +1,17 @@
 // Use window.onload to ensure all DOM elements are available before script execution
 window.onload = function () {
   // DOM Elements
-  const startButton = document.getElementById("startTimer");
+  const startStopButton = document.getElementById("startStopButton");
+  const resetButton = document.getElementById("resetButton");
   const durationInput = document.getElementById("duration");
   const timerDisplay = document.getElementById("timerDisplay");
   const permissionButton = document.getElementById("requestPermission");
   const statusMessage = document.getElementById("statusMessage");
 
-  let countdownInterval;
+  let countdownInterval = null;
+  let remainingTime = 0; // State variable for current time left
+  let initialDuration = 0; // State variable for the duration set on start/reset
+  let isTimerRunning = false; // State variable for timer status
 
   // --- UI and Formatting Functions ---
 
@@ -20,23 +24,39 @@ window.onload = function () {
       .padStart(2, "0")}`;
   }
 
+  // Function to handle Start/Stop button appearance
+  function updateStartStopButton() {
+    if (isTimerRunning) {
+      startStopButton.textContent = "Stop";
+      startStopButton.classList.remove("btn-primary");
+      startStopButton.classList.add("btn-stop"); // Use red for Stop
+      resetButton.disabled = true;
+    } else {
+      startStopButton.textContent = "Start";
+      startStopButton.classList.remove("btn-stop");
+      startStopButton.classList.add("btn-primary"); // Use indigo for Start
+      resetButton.disabled = false;
+    }
+  }
+
   // Function to update UI based on permission status
   function updatePermissionStatus(permission) {
+    // Timer is always runnable now, regardless of notification status
+
     if (permission === "granted") {
       statusMessage.textContent = "Notifications are granted. Ready to start!";
-      statusMessage.className = "text-center text-sm text-green-400";
-      startButton.disabled = false;
-      permissionButton.disabled = true;
+      statusMessage.className = "status-message status-green";
+      permissionButton.disabled = true; // Disable after granted
     } else if (permission === "denied") {
       statusMessage.textContent =
-        "Notifications are denied. Timer will still run, but no pop-up alerts will appear.";
-      statusMessage.className = "text-center text-sm text-red-400";
-      startButton.disabled = true;
+        "Notifications are denied. Timer will run, but no system pop-up will appear.";
+      statusMessage.className = "status-message status-red";
     } else {
       // default or initial load
-      statusMessage.textContent = "Permission required to start the timer.";
-      statusMessage.className = "text-center text-sm text-yellow-400";
-      startButton.disabled = true;
+      statusMessage.textContent =
+        "Click 'Request Access' to enable system pop-ups, or just start the timer.";
+      statusMessage.className = "status-message status-yellow";
+      permissionButton.disabled = false;
     }
   }
 
@@ -47,7 +67,7 @@ window.onload = function () {
     if (!("Notification" in window)) {
       statusMessage.textContent =
         "Browser does not support desktop notifications.";
-      statusMessage.className = "text-center text-sm text-red-400";
+      statusMessage.className = "status-message status-red";
       return;
     }
 
@@ -66,64 +86,130 @@ window.onload = function () {
     if (Notification.permission === "granted") {
       new Notification("🚀 Timer Complete!", {
         body: "Your countdown has finished. Time for your next task!",
-        icon: "https://placehold.co/128x128/0000FF/FFFFFF?text=T",
+        icon: "https://placehold.co/128x128/4f46e5/FFFFFF?text=T",
       });
     } else {
-      // Fallback to updating the status message
-      statusMessage.textContent =
-        "TIME'S UP! (Notification blocked by browser/user)";
-      statusMessage.className = "text-center text-sm text-red-400 font-bold";
+      // Fallback to updating the status message on the page
+      statusMessage.textContent = "TIME'S UP! (Notification blocked/denied)";
+      statusMessage.className = "status-message status-red font-bold";
     }
   }
 
   // --- Timer Logic ---
 
-  // 3. Start the Countdown Timer
-  function startCountdown() {
-    if (countdownInterval) {
+  // Function to handle the actual countdown logic (called every second)
+  function tick() {
+    remainingTime--;
+    timerDisplay.textContent = formatTime(remainingTime);
+
+    if (remainingTime <= 0) {
       clearInterval(countdownInterval);
+      countdownInterval = null;
+      isTimerRunning = false;
+
+      showTimerEndNotification();
+
+      // Reset state after completion
+      remainingTime = initialDuration;
+      timerDisplay.textContent = formatTime(remainingTime);
+      updateStartStopButton();
+      updatePermissionStatus(Notification.permission);
     }
+  }
 
-    let remainingTime = parseInt(durationInput.value, 10);
-
-    if (isNaN(remainingTime) || remainingTime <= 0) {
-      statusMessage.textContent =
-        "Please enter a positive number of seconds to start.";
-      statusMessage.className = "text-center text-sm text-red-400";
+  // 3. Start/Stop Timer Handler
+  function startStopTimer() {
+    if (isTimerRunning) {
+      // STOP/PAUSE logic
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+      isTimerRunning = false;
+      updateStartStopButton();
+      statusMessage.textContent = `Timer Paused at ${formatTime(
+        remainingTime
+      )}.`;
+      statusMessage.className = "status-message status-yellow";
       return;
     }
 
-    // Reset UI state
-    updatePermissionStatus(Notification.permission);
-    timerDisplay.textContent = formatTime(remainingTime);
-    startButton.disabled = true;
-    startButton.textContent = "Timer Running...";
+    // START/RESUME logic
 
-    // Start the interval
-    countdownInterval = setInterval(() => {
-      remainingTime--;
-      timerDisplay.textContent = formatTime(remainingTime);
-
-      if (remainingTime <= 0) {
-        clearInterval(countdownInterval);
-        startButton.disabled = false;
-        startButton.textContent = "2. Start Timer";
-
-        // Action on timer end
-        showTimerEndNotification();
+    // Check if we need to load a new duration (only if timer is currently reset/0)
+    if (countdownInterval === null) {
+      let newDuration = parseInt(durationInput.value, 10);
+      if (isNaN(newDuration) || newDuration <= 0) {
+        statusMessage.textContent =
+          "Please enter a positive number of seconds to start.";
+        statusMessage.className = "status-message status-red";
+        return;
       }
-    }, 1000);
+      // If starting from a full reset, use the input value
+      remainingTime = newDuration;
+      initialDuration = newDuration;
+    }
+
+    // Start Interval
+    isTimerRunning = true;
+    updateStartStopButton();
+
+    // Update status message immediately
+    updatePermissionStatus(Notification.permission);
+
+    // Start interval
+    countdownInterval = setInterval(tick, 1000);
+  }
+
+  // 4. Reset Timer Handler
+  function resetTimer() {
+    // 1. Stop any running interval
+    if (countdownInterval) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+    }
+
+    // 2. Reset state variables
+    isTimerRunning = false;
+
+    // Get the current value from the input field to reset
+    initialDuration = parseInt(durationInput.value, 10);
+    if (isNaN(initialDuration) || initialDuration <= 0) {
+      initialDuration = 60; // Fallback to 60 if invalid
+      durationInput.value = 60;
+    }
+    remainingTime = initialDuration;
+
+    // 3. Update display and buttons
+    timerDisplay.textContent = formatTime(initialDuration);
+    updateStartStopButton();
+    updatePermissionStatus(Notification.permission);
   }
 
   // --- Initialization ---
 
-  // Set initial time display based on input value
-  timerDisplay.textContent = formatTime(parseInt(durationInput.value, 10));
+  // Set initial duration from input
+  initialDuration = parseInt(durationInput.value, 10);
+  remainingTime = initialDuration;
+  timerDisplay.textContent = formatTime(initialDuration);
 
   // Set initial status of the buttons and message
   updatePermissionStatus(Notification.permission);
+  updateStartStopButton(); // Set initial button text to "Start"
 
   // Event listeners
   permissionButton.addEventListener("click", requestNotificationPermission);
-  startButton.addEventListener("click", startCountdown);
+  startStopButton.addEventListener("click", startStopTimer);
+  resetButton.addEventListener("click", resetTimer);
+
+  // Listener for input change: updates the duration on reset/initial load
+  durationInput.addEventListener("input", () => {
+    // Only update initialDuration if the timer is not running
+    if (!isTimerRunning && countdownInterval === null) {
+      let newDuration = parseInt(durationInput.value, 10);
+      if (!isNaN(newDuration) && newDuration > 0) {
+        initialDuration = newDuration;
+        remainingTime = newDuration;
+        timerDisplay.textContent = formatTime(newDuration);
+      }
+    }
+  });
 };

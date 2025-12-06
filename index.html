@@ -1,63 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minimal Countdown Timer</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body
-    class="bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center p-4 font-sans"
-  >
-    <div
-      class="container-card w-full max-w-sm p-8 rounded-xl shadow-2xl border border-gray-700 space-y-6"
-    >
-      <h1 class="text-3xl font-bold text-center text-blue-400">Time Keeper</h1>
+</head>
+<body>
 
-      <div
-        id="timerDisplay"
-        class="timer-display text-7xl font-extrabold text-center tabular-nums tracking-widest text-white"
-      >
-        01:00
-      </div>
+    <!-- Main Application Container -->
+    <div class="app-container">
+        <h1>Time Keeper</h1>
+        
+        <!-- Timer Display -->
+        <div id="timerDisplay" class="timer-display">
+            01:00
+        </div>
 
-      <div class="space-y-4">
-        <label for="duration" class="block text-sm font-medium text-gray-400"
-          >Set Duration (seconds):</label
-        >
-        <input
-          type="number"
-          id="duration"
-          value="60"
-          min="1"
-          class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Enter seconds"
-        />
-      </div>
+        <!-- Input Section -->
+        <div class="input-group">
+            <label for="duration" class="input-label">Set Duration (seconds):</label>
+            <input 
+                type="number" 
+                id="duration" 
+                value="60" 
+                min="1" 
+                class="timer-input"
+                placeholder="Enter seconds"
+            >
+        </div>
 
-      <div class="flex flex-col space-y-3">
-        <button
-          id="requestPermission"
-          class="start-btn w-full py-3 px-4 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-75"
-        >
-          1. Request Notification Access
-        </button>
-        <button
-          id="startTimer"
-          class="start-btn w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
-          disabled
-        >
-          2. Start Timer
-        </button>
-      </div>
+        <!-- Control Buttons -->
+        <div class="btn-group">
+            <button 
+                id="requestPermission" 
+                class="btn btn-permission"
+            >
+                1. Request Notification Access
+            </button>
+        </div>
+        
+        <div class="btn-controls-group"> 
+            <button 
+                id="startStopButton" 
+                class="btn btn-primary"
+            >
+                Start
+            </button>
+            <button 
+                id="resetButton" 
+                class="btn btn-secondary"
+            >
+                Reset
+            </button>
+        </div>
 
-      <p id="statusMessage" class="text-center text-sm text-gray-400">
-        Permission required to start the timer.
-      </p>
+        <p id="statusMessage" class="status-message">
+            Click 'Request Notification Access' to begin.
+        </p>
     </div>
 
-    <script src="script.js"></script>
-  </body>
+<script src="script.js"></script>
+</body>
 </html>

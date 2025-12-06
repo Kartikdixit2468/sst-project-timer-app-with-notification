@@ -1,0 +1,15 @@
+/* Custom styles for modern timer aesthetic */
+.timer-display {
+  font-family: "Inter", monospace;
+  text-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
+  transition: all 0.3s ease;
+}
+.container-card {
+  background-color: #1f2937; /* Darker background for the card */
+}
+.start-btn {
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+.start-btn:active {
+  transform: scale(0.98);
+}

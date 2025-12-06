@@ -13,10 +13,6 @@
     "ELXP" 0;
 }
 
-HTML{
-  scroll-behavior: smooth;
-}
-
 body {
   background-color: #121215;
   color: #e0e0e0;
@@ -30,12 +26,13 @@ body {
   padding: 0;
   position: relative;
   overflow-x: hidden;
+  min-width: 100vw;
 }
 
 .gradient-circle {
   position: absolute;
-  width: 275px;
-  height: 275px;
+  width: 230px;
+  height: 230px;
   border-radius: 50%;
   filter: blur(80px);
   opacity: 0.6;
@@ -71,12 +68,13 @@ body {
 }
 
 header {
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   left: 0;
   width: 100%;
   box-sizing: border-box;
-  padding: 20px 40px;
+  /* padding: 20px 40px; */
+  padding: 40px 40px 10px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -116,7 +114,7 @@ header {
 .app-container {
   width: 90%;
   max-width: 450px;
-  padding: 40px;
+  padding: 30px 40px;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(15px);
@@ -127,7 +125,7 @@ header {
   flex-direction: column;
   gap: 28px;
   z-index: 5;
-  margin-top: 80px;
+  margin-top: 25px;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -153,7 +151,9 @@ header {
 
 .timer-input {
   width: 100%;
-  padding: 12px;
+  margin: auto;
+  padding: 10px;
+  box-sizing: border-box;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background-color: rgba(255, 255, 255, 0.1);
@@ -216,6 +216,7 @@ footer {
   font-size: 1rem;
   color: #6b7280;
   z-index: 10;
+  margin-bottom: 5px;
 }
 
 footer span{
@@ -228,14 +229,17 @@ footer span{
     padding: 15px 20px;
   }
   .logo {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
   }
   .social-icons {
     gap: 10px;
   }
+  .social-icons a {
+    font-size: 1.2rem;
+  }
   .app-container {
     padding: 25px 20px;
-    margin-top: 65px;
+    margin-top: 15px;
   }
   .timer-display {
     font-size: 3rem;

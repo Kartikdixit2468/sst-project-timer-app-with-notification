@@ -1,44 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Cookie&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap');
+
+*{
+  letter-spacing: 3px;
+  font-family: "Bitcount Prop Single", system-ui;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "CRSV" 0.5,
+    "ELSH" 0,
+    "ELXP" 0;
+}
+
+HTML{
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: #f7f7f9; /* Light background */
-  color: #333333; /* Dark text */
-  min-height: 100vh;
+  background-color: #121215;
+  color: #e0e0e0;
+  max-height: 99vh !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.gradient-circle {
+  position: absolute;
+  width: 275px;
+  height: 275px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  z-index: 0;
+}
+#circle-1 {
+  background: radial-gradient(
+    circle,
+    rgba(79, 70, 229, 0.8),
+    rgba(200, 50, 255, 0.6)
+  );
+  top: 5%;
+  left: 5%;
+}
+#circle-2 {
+  background: radial-gradient(
+    circle,
+    rgba(255, 165, 0, 0.8),
+    rgba(255, 50, 50, 0.6)
+  );
+  bottom: 10%;
+  right: 15%;
+  transform: rotate(45deg);
+}
+#circle-3 {
+  background: radial-gradient(
+    circle,
+    rgba(20, 200, 200, 0.8),
+    rgba(50, 255, 50, 0.6)
+  );
+  top: 70%;
+  left: 10%;
+}
+
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+.logo {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 3px;
+  font-family: "Bitcount Prop Single", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "CRSV" 0.5,
+    "ELSH" 0,
+    "ELXP" 0;
+}
+.social-icons {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  font-family: "Inter", sans-serif;
-  margin: 0;
+  gap: 20px;
+}
+.social-icons a {
+  color: #e0e0e0;
+  font-size: 1.5rem;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+.social-icons a:hover {
+  color: #4f46e5;
 }
 
 .app-container {
-  width: 100%;
-  max-width: 400px;
-  padding: 32px;
-  border-radius: 12px;
-  background-color: #ffffff;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
+  width: 90%;
+  max-width: 450px;
+  padding: 40px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
-
-h1 {
+  gap: 28px;
+  z-index: 5;
+  margin-top: 80px;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  font-size: 1.875rem; /* text-3xl equivalent */
-  font-weight: 700; /* bold equivalent */
-  color: #4f46e5; /* Indigo */
 }
 
 .timer-display {
-  font-size: 4rem; /* Equivalent to text-7xl */
-  font-weight: 800;
-  text-align: center;
-  font-family: "Inter", monospace;
-  letter-spacing: 0.1em;
-  color: #1f2937;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  font-size: 5rem;
+  font-weight: 700;
+  /* font-family: "Inter", monospace; */
+  letter-spacing: 0.15em;
+  color: #ffffff;
+  text-shadow: 0 0 15px rgba(229, 187, 70, 0.7);
   line-height: 1;
 }
 
@@ -46,45 +147,34 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.input-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #6b7280;
+  width: 100%;
+  align-items: flex-start;
 }
 
 .timer-input {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #d1d5db;
-  background-color: #f9fafb;
-  color: #1f2937;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
   font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.timer-input:focus {
-  border-color: #4f46e5;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+.btn-controls-group {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+.btn-controls-group .btn {
+  flex: 1;
 }
 
-/* Style for the permission button (full width) */
 .btn-group {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-/* New style for the horizontal Start/Stop and Reset buttons */
-.btn-controls-group {
-  display: flex;
-  gap: 12px;
-}
-.btn-controls-group .btn {
-  flex: 1; /* Make buttons take equal space */
+  width: 100%;
 }
 
 .btn {
@@ -92,80 +182,71 @@ h1 {
   padding: 12px 16px;
   font-weight: 600;
   border-radius: 8px;
-  border: none;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.1s ease, background-color 0.2s ease, box-shadow 0.2s;
-}
-
-.btn:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.btn:active {
-  transform: scale(0.98);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s ease, background-color 0.2s ease;
 }
 
 .btn-permission {
-  background-color: #f59e0b; /* Amber */
-  color: white;
+  background-color: #ffc107;
+  color: #121215;
 }
-.btn-permission:hover {
-  background-color: #d97706;
-}
-
 .btn-primary {
-  background-color: #4f46e5; /* Indigo (Start) */
+  background-color: #4f46e5;
   color: white;
 }
-.btn-primary:hover {
-  background-color: #4338ca;
-}
-
 .btn-stop {
-  background-color: #ef4444; /* Red (Stop) */
+  background-color: #ef4444;
   color: white;
 }
-.btn-stop:hover {
-  background-color: #dc2626;
-}
-
 .btn-secondary {
-  background-color: #6b7280; /* Gray (Reset) */
+  background-color: rgb(206, 166, 24);
   color: white;
 }
-.btn-secondary:hover {
-  background-color: #4b5563;
-}
-
-.btn-start:disabled,
-.btn-primary:disabled,
-.btn-stop:disabled,
-.btn-secondary:disabled {
-  background-color: #9ca3af;
+.btn:disabled {
+  background-color: #4b5563 !important;
   cursor: not-allowed;
-  box-shadow: none;
 }
 
-.status-message {
+footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
   text-align: center;
-  font-size: 0.875rem;
-  margin-top: 8px;
+  font-size: 1rem;
+  color: #6b7280;
+  z-index: 10;
 }
 
-.status-green {
-  color: #10b981;
-}
-.status-red {
-  color: #ef4444;
-  font-weight: bold;
-}
-.status-yellow {
-  color: #f59e0b;
+footer span{
+  color: #4f46e5;
+  font-weight: 600;
 }
 
 @media (max-width: 600px) {
+  header {
+    padding: 15px 20px;
+  }
+  .logo {
+    font-size: 1.3rem;
+  }
+  .social-icons {
+    gap: 10px;
+  }
+  .app-container {
+    padding: 25px 20px;
+    margin-top: 65px;
+  }
   .timer-display {
     font-size: 3rem;
+    letter-spacing: 0.1em;
+  }
+  .gradient-circle {
+    width: 200px;
+    height: 200px;
+    filter: blur(50px);
+  }
+  #circle-2 {
+    right: 5%;
   }
 }

@@ -1,66 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimal Countdown Timer</title>
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timerly.io - Countdown Timer</title>
 
-    <!-- Main Application Container -->
+    <link rel="stylesheet" href="style.css" />
+
+    <script
+      src="https://kit.fontawesome.com/33d53d7cbd.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="circle-1" class="gradient-circle"></div>
+    <div id="circle-2" class="gradient-circle"></div>
+    <div id="circle-3" class="gradient-circle"></div>
+
+    <header>
+      <div class="logo">Timerly.io</div>
+      <div class="social-icons">
+        <a href="http://github.com/kartikdixit2468/"><i class="fa-brands fa-github"></i></a>
+        <a href="http://linkedin/in/dev-kartik/"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://kartikdixit2468.github.io/SST-Assignment-portfolio"><i class="fa-solid fa-link"></i></a>
+      </div>
+    </header>
+
     <div class="app-container">
-        <h1>Time Keeper</h1>
-        
-        <!-- Timer Display -->
-        <div id="timerDisplay" class="timer-display">
-            01:00
-        </div>
+      <h1>Glass Timer</h1>
 
-        <!-- Input Section -->
-        <div class="input-group">
-            <label for="duration" class="input-label">Set Duration (seconds):</label>
-            <input 
-                type="number" 
-                id="duration" 
-                value="60" 
-                min="1" 
-                class="timer-input"
-                placeholder="Enter seconds"
-            >
-        </div>
+      <div id="timerDisplay" class="timer-display">01:00</div>
 
-        <!-- Control Buttons -->
-        <div class="btn-group">
-            <button 
-                id="requestPermission" 
-                class="btn btn-permission"
-            >
-                1. Request Notification Access
-            </button>
-        </div>
-        
-        <div class="btn-controls-group"> 
-            <button 
-                id="startStopButton" 
-                class="btn btn-primary"
-            >
-                Start
-            </button>
-            <button 
-                id="resetButton" 
-                class="btn btn-secondary"
-            >
-                Reset
-            </button>
-        </div>
+      <div class="input-group">
+        <label for="duration" class="input-label"
+          >Set Duration (seconds):</label
+        >
+        <input
+          type="number"
+          id="duration"
+          value="60"
+          min="1"
+          class="timer-input"
+          placeholder="Enter seconds"
+        />
+      </div>
 
-        <p id="statusMessage" class="status-message">
-            Click 'Request Notification Access' to begin.
-        </p>
+      <div class="btn-group">
+        <button id="requestPermission" class="btn btn-permission">
+          1. Request Notification Access
+        </button>
+      </div>
+
+      <div class="btn-controls-group">
+        <button id="startStopButton" class="btn btn-primary">Start</button>
+        <button id="resetButton" class="btn btn-secondary">Reset</button>
+      </div>
+
+      <p id="statusMessage" class="status-message">
+        Click 'Request Notification Access' to begin.
+      </p>
     </div>
 
-<script src="script.js"></script>
-</body>
+    <footer>Made by <span>. Kartik Dixit</span></footer>
+
+    <script src="script.js"></script>
+  </body>
 </html>

@@ -1,4 +1,3 @@
-// Use window.onload to ensure all DOM elements are available before script execution
 window.onload = function () {
   // DOM Elements
   const startStopButton = document.getElementById("startStopButton");
@@ -41,8 +40,6 @@ window.onload = function () {
 
   // Function to update UI based on permission status
   function updatePermissionStatus(permission) {
-    // Timer is always runnable now, regardless of notification status
-
     if (permission === "granted") {
       statusMessage.textContent = "Notifications are granted. Ready to start!";
       statusMessage.className = "status-message status-green";
@@ -51,6 +48,7 @@ window.onload = function () {
       statusMessage.textContent =
         "Notifications are denied. Timer will run, but no system pop-up will appear.";
       statusMessage.className = "status-message status-red";
+      permissionButton.disabled = false;
     } else {
       // default or initial load
       statusMessage.textContent =
@@ -111,7 +109,7 @@ window.onload = function () {
 
       // Reset state after completion
       remainingTime = initialDuration;
-      timerDisplay.textContent = formatTime(remainingTime);
+      timerDisplay.textContent = formatTime(initialDuration); // Display initial duration after end
       updateStartStopButton();
       updatePermissionStatus(Notification.permission);
     }
@@ -134,25 +132,27 @@ window.onload = function () {
 
     // START/RESUME logic
 
-    // Check if we need to load a new duration (only if timer is currently reset/0)
-    if (countdownInterval === null) {
+    // Check if we need a FRESH start (i.e., time has run out or fully reset)
+    if (remainingTime === initialDuration || remainingTime <= 0) {
       let newDuration = parseInt(durationInput.value, 10);
+
       if (isNaN(newDuration) || newDuration <= 0) {
         statusMessage.textContent =
           "Please enter a positive number of seconds to start.";
         statusMessage.className = "status-message status-red";
         return;
       }
-      // If starting from a full reset, use the input value
+
+      // Load the new duration from input for a fresh start
       remainingTime = newDuration;
       initialDuration = newDuration;
+      timerDisplay.textContent = formatTime(remainingTime); // Update display with fresh time
     }
 
-    // Start Interval
+    // Start Interval (This will resume from the current remainingTime if not starting fresh)
     isTimerRunning = true;
     updateStartStopButton();
 
-    // Update status message immediately
     updatePermissionStatus(Notification.permission);
 
     // Start interval
@@ -202,7 +202,6 @@ window.onload = function () {
 
   // Listener for input change: updates the duration on reset/initial load
   durationInput.addEventListener("input", () => {
-    // Only update initialDuration if the timer is not running
     if (!isTimerRunning && countdownInterval === null) {
       let newDuration = parseInt(durationInput.value, 10);
       if (!isNaN(newDuration) && newDuration > 0) {

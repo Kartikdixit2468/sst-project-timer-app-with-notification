@@ -1,7 +1,7 @@
 window.onload = function () {
   const startStopButton = document.getElementById("startStopButton");
   const resetButton = document.getElementById("resetButton");
-  const durationInput = document.getElementElementById("duration");
+  const durationInput = document.getElementById("duration");
   const timerDisplay = document.getElementById("timerDisplay");
   const permissionButton = document.getElementById("requestPermission");
   const statusMessage = document.getElementById("statusMessage");
